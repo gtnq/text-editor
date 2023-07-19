@@ -12,9 +12,7 @@ module.exports = () => {
 		entry: {
 			main: "./src/js/index.js",
 			install: "./src/js/install.js",
-			database: "./src/js/database.js",
-			editor: "./src/js/editor.js",
-			header: "./src/js/header.js",
+			
 		},
 		output: {
 			filename: "[name].bundle.js",
@@ -25,37 +23,58 @@ module.exports = () => {
 				template: "./index.html",
 				title: "JATE",
 			}),
-			new WebpackPwaManifest({
-				name: "JATE",
-				short_name: "JATE",
-				description: "Just Another Text Editor",
-				background_color: "#ffffff",
-				theme_color: "#ffffff",
-				start_url: "/",
-				fingerprints: false,
-				inject: true,
-				icons: [
-					{
-						src: path.resolve("src/images/logo.png"),
-						size: [96, 128, 192, 256, 384, 512],
-						destination: path.join("assets", "icons"),
-					},
-				],
-			}),
 			new InjectManifest({
 				swSrc: "./src-sw.js",
 				swDest: "src-sw.js",
 			}),
-		],
+		// 	new WebpackPwaManifest({
+		// 		fingerprints: false,
+		// 		inject: true,
+		// 		name: "JATE",
+		// 		short_name: "JATE",
+		// 		description: "Just Another Text Editor",
+		// 		background_color: "#ffffff",
+		// 		theme_color: "#ffffff",
+		// 		start_url: "./",
+		// 		icons: [
+		// 			{
+		// 				src: path.resolve("src/images/logo.png"),
+		// 				sizes: [96, 128, 192, 256, 384, 512],
+		// 				destination: path.join("assets", "icons"),
+		// 			},
+		// 		],
+		// 	}),
+			
+		// ],
+		new WebpackPwaManifest({
+			fingerprints: false,
+			inject: true,
+			name: "Just Another Text Editor",
+			short_name: "J.A.T.E.",
+			description: "Create notes with or without an internet connection!",
+			background_color: "#ffffff",
+			theme_color: "#ffffff",
+			start_url: "./",
+			publicPath: "./",
+			icons: [
+				{
+					src: path.resolve("src/images/logo.png"),
+					sizes: [96, 128, 192, 256, 384, 512],
+					destination: path.join("assets", "icons"),
+				},
+			],
+		}),
+	],
 		module: {
 			rules: [
 				{
 					test: /\.css$/i,
 					use: ["style-loader", "css-loader"],
 				},
+				
 				{
 					test: /\.m?js$/,
-					exclude: /node_modules/,
+					exclude: /node_modules|bower_components/,
 					use: {
 						loader: "babel-loader",
 						options: {
